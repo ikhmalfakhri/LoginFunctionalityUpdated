@@ -175,7 +175,7 @@ public class modulesDetail extends javax.swing.JFrame{
 
             },
             new String [] {
-                "MODULES", "OCC", "DAY", "TIMESTART", "TIMEEND", "ACTIVITY", "LECTURER", "TARGET"
+                "MODULES", "OCC", "DAY", "TIME START", "TIME END", "ACTIVITY", "MODULE TUTOR", "TARGET"
             }
         ));
         modulesTable.setColumnSelectionAllowed(true);
@@ -344,6 +344,7 @@ public class modulesDetail extends javax.swing.JFrame{
             this.setVisible(false);
         }catch(Exception e){
             System.out.println("273 md");
+            JOptionPane.showMessageDialog(null,"NO COURSE SELECTED");
         }
     }//GEN-LAST:event_editButtonActionPerformed
 

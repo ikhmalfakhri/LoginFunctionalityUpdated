@@ -98,10 +98,10 @@
                 <Column editable="true" title="MODULES" type="java.lang.Object"/>
                 <Column editable="true" title="OCC" type="java.lang.Object"/>
                 <Column editable="true" title="DAY" type="java.lang.Object"/>
-                <Column editable="true" title="TIMESTART" type="java.lang.Object"/>
-                <Column editable="true" title="TIMEEND" type="java.lang.Object"/>
+                <Column editable="true" title="TIME START" type="java.lang.Object"/>
+                <Column editable="true" title="TIME END" type="java.lang.Object"/>
                 <Column editable="true" title="ACTIVITY" type="java.lang.Object"/>
-                <Column editable="true" title="LECTURER" type="java.lang.Object"/>
+                <Column editable="true" title="MODULE TUTOR" type="java.lang.Object"/>
                 <Column editable="true" title="TARGET" type="java.lang.Object"/>
               </Table>
             </Property>

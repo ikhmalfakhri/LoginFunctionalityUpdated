@@ -4,6 +4,8 @@
  */
 package updatedloginfunctionality;
 
+import lecturer.lecWelcome;
+import admin.adminWelcome;
 import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,9 +20,17 @@ public class LoginForm1 extends javax.swing.JFrame {
     PreparedStatement ps = null;
     ResultSet rs = null;
     static String userName = "PLACEHOLDER";
+    static int sype = -1;
     
     public void setUserName(String inputtedUserName){
         this.userName = inputtedUserName;
+    }
+    
+    public void setSType(int stype){
+        this.sype = stype;
+    }
+    public int getSType(){
+        return sype;
     }
     
     public String getUserName(){
@@ -52,8 +62,11 @@ public class LoginForm1 extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         passwordTextField = new javax.swing.JPasswordField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setName("Log In "); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel1.setText("Log In Page");
@@ -71,6 +84,8 @@ public class LoginForm1 extends javax.swing.JFrame {
         });
 
         jButton1.setText("Login");
+        jButton1.setMaximumSize(new java.awt.Dimension(73, 22));
+        jButton1.setMinimumSize(new java.awt.Dimension(73, 22));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -84,6 +99,13 @@ public class LoginForm1 extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Register");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -92,13 +114,13 @@ public class LoginForm1 extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(87, 87, 87)
-                            .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1)))
+                    .addComponent(jLabel2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3)
                     .addComponent(usernameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                     .addComponent(passwordTextField))
@@ -119,7 +141,8 @@ public class LoginForm1 extends javax.swing.JFrame {
                 .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3)
                     .addComponent(jButton2))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
@@ -173,14 +196,43 @@ public class LoginForm1 extends javax.swing.JFrame {
                     
                 }
                 dispose();
-                new WelcomePageV2().setVisible(true);
+                
+        String role = "SELECT STDNT_TYPE FROM logintable where MATRIX_NUMBER = '"+inputtedUserName+"'";
+        try{
+            ps = con.prepareStatement(role);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                int stype = rs.getInt("STDNT_TYPE");
+                if(stype==-1){
+                    new adminWelcome().setVisible(true);
+                } else if(stype==0){
+                    new lecWelcome().setVisible(true);
+                }
+                else{
+                    new adminWelcome().setVisible(true);
+                }
+                setSType(stype);
+            }
+           
+            
+        }catch(SQLException ex){
+            
+        }
             }else{
                 JOptionPane.showMessageDialog(null, "Login Failed");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        new RegisterForm().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +272,7 @@ public class LoginForm1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

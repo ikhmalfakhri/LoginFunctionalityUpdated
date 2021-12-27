@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package updatedloginfunctionality;
+package admin;
 
+import updatedloginfunctionality.adminCourses;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class adminPanel extends javax.swing.JFrame {
         initComponents();
         txtSpec2.setVisible(false);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +42,7 @@ public class adminPanel extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jLabel14 = new javax.swing.JLabel();
         Edit = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -58,7 +60,6 @@ public class adminPanel extends javax.swing.JFrame {
         txtSpec2 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         txtSpec1 = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
 
         jLabel12.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel12.setText("Which Department");
@@ -69,6 +70,9 @@ public class adminPanel extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(jList1);
+
+        jLabel14.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel14.setText("Lecture Capacity");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +88,7 @@ public class adminPanel extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("ADD MODULE COURSE INFORMATION");
+        jLabel2.setText("ADD COURSE INFORMATION");
 
         txtCredit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
 
@@ -92,6 +96,11 @@ public class adminPanel extends javax.swing.JFrame {
         jLabel3.setText("Course Code");
 
         txtType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LECTURE", "TUTORIAL", "LAB", "LECTURE, TUTORIAL, LAB", "LECTURE, TUTORIAL", "TUTORIAL, LAB" }));
+        txtType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTypeActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel8.setText("Select Activity");
@@ -126,6 +135,7 @@ public class adminPanel extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel10.setText("Specialization");
 
+        txtSpec2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL" }));
         txtSpec2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSpec2ActionPerformed(evt);
@@ -140,17 +150,6 @@ public class adminPanel extends javax.swing.JFrame {
                 txtSpec1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 59, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,27 +172,25 @@ public class adminPanel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 12, Short.MAX_VALUE)))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtCode)
-                        .addComponent(txtCredit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtType, 0, 228, Short.MAX_VALUE)
-                        .addComponent(txtMuet, javax.swing.GroupLayout.Alignment.TRAILING, 0, 228, Short.MAX_VALUE)
-                        .addComponent(txtSpec2, 0, 228, Short.MAX_VALUE)
-                        .addComponent(txtSpec1, 0, 228, Short.MAX_VALUE)))
-                .addGap(50, 50, 50))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCode)
+                    .addComponent(txtCredit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtType, 0, 228, Short.MAX_VALUE)
+                    .addComponent(txtMuet, javax.swing.GroupLayout.Alignment.TRAILING, 0, 228, Short.MAX_VALUE)
+                    .addComponent(txtSpec2, 0, 228, Short.MAX_VALUE)
+                    .addComponent(txtSpec1, 0, 228, Short.MAX_VALUE))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,18 +216,15 @@ public class adminPanel extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txtMuet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(txtSpec1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtSpec2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(127, 127, 127)
-                        .addComponent(jLabel11)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(txtSpec2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel10))
+                .addGap(87, 87, 87)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,7 +236,7 @@ public class adminPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        adminModules db = new adminModules();
+        adminCourses db = new adminCourses();
         db.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_EditActionPerformed
@@ -253,35 +247,35 @@ public class adminPanel extends javax.swing.JFrame {
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         // TODO add your handling code here:
-        WelcomePageV2 wp2 = new WelcomePageV2();
+        adminWelcome wp2 = new adminWelcome();
         wp2.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_ExitActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String coursecode = txtCode.getText().toUpperCase();  
+        String coursecode = txtCode.getText().toUpperCase();
         String type = txtType.getSelectedItem().toString();
         String cd = txtCredit.getSelectedItem().toString();
         String mt = txtMuet.getSelectedItem().toString();
         int credit = Integer.parseInt(cd);
         int muet = Integer.parseInt(mt);
         String spc1 = txtSpec1.getSelectedItem().toString();
-        String spc2 = txtSpec2.getSelectedItem().toString();
+        String spc2 = txtSpec2.getSelectedItem().toString();        
         int csit = -1;
         int stype = 0;
         if(spc1.equals("COMPUTER SCIENCE")){
             csit = 1;
         }else if(spc1.equals("ALL")){
-            csit = 0;   
+            csit = 0;
         }else{
             csit = 2;
         }
-        
+
         if(spc2.equals("ALL")){
             stype = 0;
         }else if(spc2.equals("Bachelor of Computer Science (Artificial Intelligence)")){
-            stype = 2;   
+            stype = 2;
         }else if(spc2.equals("Bachelor of Computer Science (Information Systems)")){
             stype = 3;
         }else if(spc2.equals("Bachelor of Computer Science (Computer System and Network)")){
@@ -293,7 +287,7 @@ public class adminPanel extends javax.swing.JFrame {
         }else if(spc2.equals("Bachelor of Computer Science (Software Engineering)")){
             stype = 4;
         }
-        
+
         
         
                
@@ -306,24 +300,6 @@ public class adminPanel extends javax.swing.JFrame {
             Statement st;
             st = con.createStatement();
 
-            /*String strQuery = "SELECT COUNT(*) FROM root.modules where code='" + coursecode + "'";
-            ResultSet rs = st.executeQuery(strQuery);
-            rs.next();
-            String Countrow = rs.getString(1);
-            System.out.println(Countrow);
-            if (Countrow.equals("0")) {
-                int i = st.executeUpdate("insert into root.modules(code,name,tutor,occ,activity,timeslot)values('" + coursecode + "','" + coursename + "','" + lecturer + "','" + occ + "','" + type + "','" + time + "')");
-                JOptionPane.showMessageDialog(this,"Course Added");
-            } else {
-                String strQuery2 = "SELECT COUNT(*) FROM root.modules where occ='" + occ + "'";
-                ResultSet rs2 = st.executeQuery(strQuery2);
-                rs2.next();
-                String Countrow2 = rs2.getString(1);
-                System.out.println(Countrow2);
-                if (Countrow2.equals("0")) {
-                    int i = st.executeUpdate("insert into root.modules(code,name,tutor,occ,activity,timeslot)values('" + coursecode + "','" + coursename + "','" + lecturer + "','" + occ + "','" + type + "','" + time + "')");
-                    JOptionPane.showMessageDialog(this,"Course Added");
-                } else {*/
             String strQuery3 = "SELECT COUNT(*) FROM app.valid_modules where module='" + coursecode + "'";
             ResultSet rs3 = st.executeQuery(strQuery3);
             rs3.next();
@@ -359,7 +335,7 @@ public class adminPanel extends javax.swing.JFrame {
         }else if(txtSpec1.getSelectedItem().toString().equals("INFORMATION TECHNOLOGY")){
             txtSpec2.setVisible(true);
             txtSpec2.removeAllItems();
-            txtSpec2.addItem("(Multimedia)");  
+            txtSpec2.addItem("(Multimedia)");
         } else{
             txtSpec2.setVisible(false);
         }
@@ -368,6 +344,10 @@ public class adminPanel extends javax.swing.JFrame {
     private void txtSpec2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpec2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSpec2ActionPerformed
+
+    private void txtTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,13 +392,13 @@ public class adminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtCode;
     private javax.swing.JComboBox<String> txtCredit;
