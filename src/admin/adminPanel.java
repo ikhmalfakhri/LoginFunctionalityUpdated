@@ -13,8 +13,8 @@ import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -28,8 +28,30 @@ public class adminPanel extends javax.swing.JFrame {
     public adminPanel() {
         initComponents();
         txtSpec2.setVisible(false);
+        getHours();
+        hideHours();
+        
     }
     
+    public void getHours(){
+        int min = 0; 
+        int max = Integer.parseInt(txtCredit.getSelectedItem().toString());
+        SpinnerModel value = new SpinnerNumberModel(0,min,max,1);
+        SpinnerModel valueTut = new SpinnerNumberModel(0,min,max,1);
+        SpinnerModel valueLab = new SpinnerNumberModel(0,min,max,1);
+        LecHour.setModel(value);
+        TutHour.setModel(valueTut);
+        LabHour.setModel(valueLab);
+    }
+    
+    public void hideHours(){
+        LabHour.setVisible(false);
+        LecHour.setVisible(false);
+        TutHour.setVisible(false);
+        lecHoursLabel.setVisible(false);
+        tutHoursLabel.setVisible(false);
+        labHoursLabel.setVisible(false);
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +82,12 @@ public class adminPanel extends javax.swing.JFrame {
         txtSpec2 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         txtSpec1 = new javax.swing.JComboBox<>();
+        lecHoursLabel = new javax.swing.JLabel();
+        labHoursLabel = new javax.swing.JLabel();
+        tutHoursLabel = new javax.swing.JLabel();
+        LecHour = new javax.swing.JSpinner();
+        TutHour = new javax.swing.JSpinner();
+        LabHour = new javax.swing.JSpinner();
 
         jLabel12.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel12.setText("Which Department");
@@ -91,11 +119,21 @@ public class adminPanel extends javax.swing.JFrame {
         jLabel2.setText("ADD COURSE INFORMATION");
 
         txtCredit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        txtCredit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCreditActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("Course Code");
 
         txtType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LECTURE", "TUTORIAL", "LAB", "LECTURE, TUTORIAL, LAB", "LECTURE, TUTORIAL", "TUTORIAL, LAB" }));
+        txtType.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTypeFocusGained(evt);
+            }
+        });
         txtType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTypeActionPerformed(evt);
@@ -151,46 +189,72 @@ public class adminPanel extends javax.swing.JFrame {
             }
         });
 
+        lecHoursLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        lecHoursLabel.setText("Lecture Hours");
+
+        labHoursLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        labHoursLabel.setText("Lab Hours");
+
+        tutHoursLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        tutHoursLabel.setText("Tutorial Hours");
+
+        LecHour.setModel(new javax.swing.SpinnerNumberModel());
+        LecHour.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                LecHourStateChanged(evt);
+            }
+        });
+
+        TutHour.setModel(new javax.swing.SpinnerNumberModel());
+
+        LabHour.setModel(new javax.swing.SpinnerNumberModel(0, 0, 5, 1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Exit))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lecHoursLabel))
+                            .addComponent(tutHoursLabel)
+                            .addComponent(labHoursLabel))))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCode)
                     .addComponent(txtCredit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtType, 0, 228, Short.MAX_VALUE)
-                    .addComponent(txtMuet, javax.swing.GroupLayout.Alignment.TRAILING, 0, 228, Short.MAX_VALUE)
-                    .addComponent(txtSpec2, 0, 228, Short.MAX_VALUE)
-                    .addComponent(txtSpec1, 0, 228, Short.MAX_VALUE))
-                .addGap(49, 49, 49))
+                    .addComponent(txtType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtMuet, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSpec2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSpec1, 0, 245, Short.MAX_VALUE)
+                    .addComponent(LecHour)
+                    .addComponent(LabHour)
+                    .addComponent(TutHour))
+                .addGap(59, 59, 59))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Exit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,38 +262,53 @@ public class adminPanel extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(txtCredit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtMuet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtSpec1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(txtSpec2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel10))
-                .addGap(87, 87, 87)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(txtCredit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtMuet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtSpec1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSpec2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel11)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lecHoursLabel)
+                    .addComponent(LecHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tutHoursLabel)
+                    .addComponent(TutHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labHoursLabel)
+                    .addComponent(LabHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,7 +340,12 @@ public class adminPanel extends javax.swing.JFrame {
         int credit = Integer.parseInt(cd);
         int muet = Integer.parseInt(mt);
         String spc1 = txtSpec1.getSelectedItem().toString();
-        String spc2 = txtSpec2.getSelectedItem().toString();        
+        String spc2 = txtSpec2.getSelectedItem().toString();
+        int lechour = (Integer)LecHour.getValue();
+        int tutohour = (Integer)TutHour.getValue();
+        int labhour = (Integer)LabHour.getValue();
+
+        
         int csit = -1;
         int stype = 0;
         if(spc1.equals("COMPUTER SCIENCE")){
@@ -305,11 +389,15 @@ public class adminPanel extends javax.swing.JFrame {
             rs3.next();
             String Countrow3 = rs3.getString(1);
             System.out.println(Countrow3);
+            if(credit==(labhour+lechour+tutohour)){
             if (Countrow3.equals("0")) {
-                int i = st.executeUpdate("INSERT INTO APP.VALID_MODULES(MODULE,ACTIVITY,CREDIT,MUET,CSIT,STUDENTTYPE)VALUES('" + coursecode + "','" + type + "',"+credit+","+muet+","+csit+","+stype+")");
+                int i = st.executeUpdate("INSERT INTO APP.VALID_MODULES(MODULE,ACTIVITY,CREDIT,MUET,CSIT,STUDENTTYPE,LECTUREHOUR,TUTORIALHOUR,LABHOUR)VALUES('" + coursecode + "','" + type + "',"+credit+","+muet+","+csit+","+stype+","+lechour+","+tutohour+","+labhour+")");
                 JOptionPane.showMessageDialog(this, "Course Added");
             } else {
                 JOptionPane.showMessageDialog(this, "Added course already exists!");
+            }
+            }else{
+                JOptionPane.showMessageDialog(this, "Invalid Activity Hours");
             }
 
             // }
@@ -347,7 +435,54 @@ public class adminPanel extends javax.swing.JFrame {
 
     private void txtTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTypeActionPerformed
         // TODO add your handling code here:
+        int index = txtType.getSelectedIndex();
+        if(index == 0){
+            hideHours();
+            LecHour.setVisible(true);
+            lecHoursLabel.setVisible(true);
+        } else if(index == 1){
+            hideHours();
+            TutHour.setVisible(true);
+            tutHoursLabel.setVisible(true);
+        } else if(index == 2){
+            hideHours();
+            LabHour.setVisible(true);
+            labHoursLabel.setVisible(true);
+        } else if(index == 3){
+            hideHours();
+            LecHour.setVisible(true);
+            lecHoursLabel.setVisible(true);
+            TutHour.setVisible(true);
+            tutHoursLabel.setVisible(true);
+            LabHour.setVisible(true);
+            labHoursLabel.setVisible(true);
+        } else if(index == 4){
+            hideHours();
+            LecHour.setVisible(true);
+            lecHoursLabel.setVisible(true);
+            TutHour.setVisible(true);
+            tutHoursLabel.setVisible(true);
+        } else if(index == 5){
+            hideHours();
+            LabHour.setVisible(true);
+            labHoursLabel.setVisible(true);
+            TutHour.setVisible(true);
+            tutHoursLabel.setVisible(true);
+        }
     }//GEN-LAST:event_txtTypeActionPerformed
+
+    private void txtCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCreditActionPerformed
+        // TODO add your handling code here:
+        getHours();
+    }//GEN-LAST:event_txtCreditActionPerformed
+
+    private void LecHourStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LecHourStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LecHourStateChanged
+
+    private void txtTypeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTypeFocusGained
 
     /**
      * @param args the command line arguments
@@ -387,6 +522,9 @@ public class adminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Edit;
     private javax.swing.JButton Exit;
+    private javax.swing.JSpinner LabHour;
+    private javax.swing.JSpinner LecHour;
+    private javax.swing.JSpinner TutHour;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
@@ -400,6 +538,9 @@ public class adminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labHoursLabel;
+    private javax.swing.JLabel lecHoursLabel;
+    private javax.swing.JLabel tutHoursLabel;
     private javax.swing.JTextField txtCode;
     private javax.swing.JComboBox<String> txtCredit;
     private javax.swing.JComboBox<String> txtMuet;

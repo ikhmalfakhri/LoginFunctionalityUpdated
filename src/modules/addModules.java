@@ -255,7 +255,7 @@ public class addModules extends javax.swing.JFrame {
             }
         });
 
-        ampm1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
+        ampm1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PM" }));
         ampm1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ampm1ActionPerformed(evt);
@@ -508,7 +508,17 @@ public class addModules extends javax.swing.JFrame {
 
     private void txtTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTime1ActionPerformed
         // TODO add your handling code here:
-        setHour();
+        int index = txtTime1.getSelectedIndex();
+        if(index<=7){
+            ampm1.addItem("PM");
+            ampm1.removeItem("PM");
+            ampm1.removeItem("AM");
+            setHour();
+        } else{
+            ampm1.addItem("AM");
+            ampm1.removeItem("PM");
+            setHour();
+        }
     }//GEN-LAST:event_txtTime1ActionPerformed
 
     private void ampm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ampm1ActionPerformed

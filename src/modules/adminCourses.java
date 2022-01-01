@@ -274,11 +274,11 @@ public class adminCourses extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(lf.getSType()==0){
+        if(lf.getSType()==-1){
             adminWelcome ap = new adminWelcome();
             ap.setVisible(true);
             this.setVisible(false);
-        } else if(lf.getSType()==1){
+        } else if(lf.getSType()==0){
             new lecWelcome().setVisible(true);
             this.setVisible(false);
         }
