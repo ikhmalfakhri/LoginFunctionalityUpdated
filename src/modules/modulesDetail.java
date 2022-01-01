@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package updatedloginfunctionality;
+package modules;
 
+import authentication.ConnectDatabase;
+import authentication.LoginForm1;
+import modules.addModules;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +29,8 @@ public class modulesDetail extends javax.swing.JFrame{
     LoginForm1 lf = new LoginForm1();
     adminCourses am =new adminCourses();
     int hours = -1;
-    static int occ = -1; static String type=""; static String eday =""; static String etime =""; static String elec =""; static int ecap =-1; static int edit =0;
-    static String etime1 = ""; static String etime2="";
+    static int occ = -1,ecap =-1,edit =0;
+    static String type="",eday ="", etime ="",etime1 = "",etime2="",elec ="";
     
 
     public void updateTable(){

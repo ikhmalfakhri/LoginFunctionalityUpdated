@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package updatedloginfunctionality;
+package authentication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author Ikhmal Fakhri <u2000600@siswa.um.edu.my>
  */
-public class RegisterForm extends javax.swing.JFrame {
+public class studentRegister extends javax.swing.JFrame {
     
     java.sql.PreparedStatement ps = null;
     ResultSet rs = null;
@@ -27,18 +27,18 @@ public class RegisterForm extends javax.swing.JFrame {
     /**
      * Creates new form RegisterForm
      */
-    public RegisterForm() {
+    public studentRegister() {
         initComponents();
         txtProg.addItem("COMPUTER SYSTEM AND NETWORK");
         txtProg.addItem("ARTIFICIAL INTELLIGENCE");
         txtProg.addItem("INFORMATION SYSTEMS");
         txtProg.addItem("SOFTWARE ENGINEERING");
         txtProg.addItem("DATA SCIENCE");
-        setMatrixNo();
-        mtxNo.setText(getMatrixNo());
+        txtUsername.setText(getMatrixNo());
+        txtUsername.setEditable(false);
         
     }
-    public void setMatrixNo(){
+    public String getMatrixNo(){
         try{
             //Getting incremental matrix number with student count
             String mxn = "SELECT COUNT(*) FROM app.logintable WHERE STDNT_TYPE>"+ 0 +"";
@@ -46,13 +46,10 @@ public class RegisterForm extends javax.swing.JFrame {
             rs = ps.executeQuery();
             rs.next();
             int mx = Integer.parseInt(rs.getString(1));
-            String mxno = "";
-            matrix = "U"+mxno.valueOf(2000000+mx).toString();
+            matrix = "U"+String.valueOf(2000000+mx);
         }catch(SQLException e){
             
         }
-    }
-    public String getMatrixNo(){
         return matrix;
     }
 
@@ -83,13 +80,12 @@ public class RegisterForm extends javax.swing.JFrame {
         regButton = new javax.swing.JButton();
         txtMuetb = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        CSITlabel = new javax.swing.JLabel();
         txtCSIT = new javax.swing.JComboBox<>();
         txtProg = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
-        mtxNo = new javax.swing.JLabel();
-        swithc = new javax.swing.JButton();
-        txtUsername = new javax.swing.JPasswordField();
+        progLabel = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        regButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -114,6 +110,7 @@ public class RegisterForm extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(790, 492));
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel1.setText("Register Student");
@@ -124,8 +121,6 @@ public class RegisterForm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
         jLabel3.setText("FIRST NAME:");
 
-        txtFname.setEditable(false);
-        txtFname.setText("telo");
         txtFname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFnameActionPerformed(evt);
@@ -150,7 +145,7 @@ public class RegisterForm extends javax.swing.JFrame {
         txtPass.setToolTipText("At least 8 Characters ");
 
         jLabel7.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jLabel7.setText("E-MAIL:");
+        jLabel7.setText("SISWAMAIL:");
 
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,8 +165,8 @@ public class RegisterForm extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
         jLabel8.setText("MUET BAND");
 
-        jLabel9.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jLabel9.setText("DEPARTMENT");
+        CSITlabel.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        CSITlabel.setText("DEPARTMENT");
 
         txtCSIT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "COMPUTER SCIENCE", "INFORMATION TECHNOLOGY" }));
         txtCSIT.setToolTipText("");
@@ -186,97 +181,95 @@ public class RegisterForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jLabel10.setText("PROGRAMME");
+        progLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        progLabel.setText("PROGRAMME");
 
-        mtxNo.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        mtxNo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mtxNo.setText("MATRIX NO PLACEHOLDER");
-        mtxNo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        swithc.setText("switch");
-        swithc.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtUsername.setMaximumSize(new java.awt.Dimension(64, 31));
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                swithcActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
 
-        txtUsername.setToolTipText("At least 8 Characters ");
+        regButton1.setText("Back");
+        regButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(regButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(mtxNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtFname, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(6, 6, 6)
-                                                .addComponent(jLabel7)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUsername))
-                                .addGap(75, 75, 75))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtMuetb, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))
-                                .addGap(281, 281, 281)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtFname, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel7)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtMuetb, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel6)
                                 .addComponent(jLabel5)
                                 .addComponent(txtPass)
                                 .addComponent(txtPass2)
-                                .addComponent(jLabel9)
+                                .addComponent(CSITlabel)
                                 .addComponent(txtCSIT, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
+                                .addComponent(progLabel)
                                 .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(swithc)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(regButton)))
-                        .addGap(37, 37, 37))))
+                            .addComponent(regButton))))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(regButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mtxNo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CSITlabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCSIT, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -291,27 +284,19 @@ public class RegisterForm extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(progLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtProg))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMuetb, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(regButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(swithc, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(regButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -329,59 +314,9 @@ public class RegisterForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void regButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regButtonActionPerformed
-        //Initializing the inputs onto strings and ints
-        //String username = txtUsername.getText();
-        String fname = txtFname.getText().toUpperCase();
-        String lname = txtLname.getText().toUpperCase();
-        String email = txtEmail.getText();
-        String pass = txtPass.getText();
-        String cpass = txtPass2.getText();
-        setMatrixNo();
-        String matrix = getMatrixNo();
-        int muet = (Integer)txtMuetb.getValue();
-        int csit = txtCSIT.getSelectedIndex()+1;
-        int studtype = -1;
-        
-        //Getting CSIT value with index value
-        if(csit==1){
-            studtype = txtProg.getSelectedIndex()+1;
-        } else if (csit==2){
-            studtype = 6;
-        }
-        //Combining first name and last name for full name
-        String fullname = fname+" "+lname;
-        
-        try{
-            
-            if(pass.equals(cpass))
-            {
-                //Inserting inputs onto database(LOGINTABLE)
-                String reg ="INSERT INTO APP.LOGINTABLE(MATRIX_NUMBER,PASSWORD,STDNT_TYPE,MUET_BAND,FULLNAME,CSIT_LOGIN)VALUES('"+matrix+"','"+pass+"',"+studtype+","+muet+",'"+fullname+"',"+csit+")";
-                Statement st;
-                st = con.createStatement();
-                st.execute(reg);
-                
-                String lineSep = System.lineSeparator();
-                StringBuilder result = new StringBuilder();
-                result.append(fullname).append(" REGISTERED!").append(lineSep).append(lineSep);
-                result.append("MATRIX NUMBER : ").append(matrix).append(lineSep);
-
-                JOptionPane.showMessageDialog(null, result.toString());
-                //JOptionPane.showMessageDialog(null,"STUDENT REGISTERED");
-                new LoginForm1().setVisible(true);
-                this.setVisible(false);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"Password does not match");
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"REGISTRATION FAILED");
-        }
-        
-        
-    }//GEN-LAST:event_regButtonActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void txtCSITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCSITActionPerformed
         //Adds specialization options
@@ -403,11 +338,69 @@ public class RegisterForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCSITMouseClicked
 
-    private void swithcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swithcActionPerformed
-        // TODO add your handling code here:fg
-        mtxNo.setText(txtUsername.getText());
-        
-    }//GEN-LAST:event_swithcActionPerformed
+    private void regButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regButtonActionPerformed
+        //Initializing the inputs onto strings and ints
+        //String username = txtUsername.getText();
+        String fname = txtFname.getText().toUpperCase();
+        String lname = txtLname.getText().toUpperCase();
+        String email = txtEmail.getText();
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        String pass = txtPass.getText();
+        String cpass = txtPass2.getText();
+        String matrix = getMatrixNo();
+        int muet = (Integer)txtMuetb.getValue();
+        int csit = txtCSIT.getSelectedIndex()+1;
+        int studtype = -1;
+
+        //Getting CSIT value with index value
+        if(csit==1){
+            studtype = txtProg.getSelectedIndex()+1;
+        } else if (csit==2){
+            studtype = 6;
+        }
+        //Combining first name and last name for full name
+        String fullname = fname+" "+lname;
+
+        try{
+
+            if(pass.equals(cpass))
+            {
+                if(email.matches(EMAIL_PATTERN)){
+                //Inserting inputs onto database(LOGINTABLE)
+                String reg ="INSERT INTO APP.LOGINTABLE(MATRIX_NUMBER,PASSWORD,STDNT_TYPE,MUET_BAND,FULLNAME,CSIT_LOGIN)VALUES('"+matrix+"','"+pass+"',"+studtype+","+muet+",'"+fullname+"',"+csit+")";
+                Statement st;
+                st = con.createStatement();
+                st.execute(reg);
+
+                String lineSep = System.lineSeparator();
+                StringBuilder result = new StringBuilder();
+                result.append(fullname).append(" REGISTERED!").append(lineSep).append(lineSep);
+                result.append("MATRIX NUMBER : ").append(matrix).append(lineSep);
+
+                JOptionPane.showMessageDialog(null, result.toString());
+                //JOptionPane.showMessageDialog(null,"STUDENT REGISTERED");
+                new LoginForm1().setVisible(true);
+                this.setVisible(false);
+                } else{
+                    JOptionPane.showMessageDialog(null,"Email is not valid");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Password does not match");
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"REGISTRATION FAILED");
+        }
+
+    }//GEN-LAST:event_regButtonActionPerformed
+
+    private void regButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regButton1ActionPerformed
+        // TODO add your handling code here:
+        LoginForm1 lf = new LoginForm1();
+        lf.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_regButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,29 +419,29 @@ public class RegisterForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegisterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(studentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegisterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(studentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegisterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(studentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegisterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(studentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegisterForm().setVisible(true);
+                new studentRegister().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CSITlabel;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -456,11 +449,10 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel mtxNo;
+    private javax.swing.JLabel progLabel;
     private javax.swing.JButton regButton;
-    private javax.swing.JButton swithc;
+    private javax.swing.JButton regButton1;
     private javax.swing.JComboBox<String> txtCSIT;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFname;
@@ -469,6 +461,6 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JPasswordField txtPass2;
     private javax.swing.JComboBox<String> txtProg;
-    private javax.swing.JPasswordField txtUsername;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

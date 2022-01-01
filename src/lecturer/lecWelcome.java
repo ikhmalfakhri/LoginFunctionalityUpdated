@@ -4,10 +4,10 @@
  */
 package lecturer;
 
-import updatedloginfunctionality.LoginForm1;
-import updatedloginfunctionality.LoginForm1;
-import updatedloginfunctionality.adminCourses;
-import updatedloginfunctionality.adminCourses;
+import authentication.LoginForm1;
+import authentication.LoginForm1;
+import modules.adminCourses;
+import modules.adminCourses;
 
 /**
  *

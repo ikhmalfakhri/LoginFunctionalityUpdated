@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package updatedloginfunctionality;
+package modules;
 
+import authentication.ConnectDatabase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -40,7 +41,7 @@ public class addModules extends javax.swing.JFrame {
 
     public void setLec() {
         try {
-            String slc = "SELECT * FROM LOGINTABLE WHERE STDNT_TYPE=" + 1 + "";
+            String slc = "SELECT * FROM LOGINTABLE WHERE STDNT_TYPE=" + 0 + "";
             ps = con.prepareStatement(slc);
             rs = ps.executeQuery();
             while (rs.next()) {

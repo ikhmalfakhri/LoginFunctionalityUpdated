@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package updatedloginfunctionality;
+package modules;
 
 import lecturer.lecWelcome;
 import admin.adminWelcome;
@@ -19,9 +19,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger; 
 import javax.swing.table.*;
 import javax.swing.*;
-import updatedloginfunctionality.ConnectDatabase;
-import updatedloginfunctionality.LoginForm1;
-import updatedloginfunctionality.modulesDetail;
+import authentication.ConnectDatabase;
+import authentication.ConnectDatabase;
+import authentication.LoginForm1;
+import authentication.LoginForm1;
+import modules.modulesDetail;
 
 /**
  *
