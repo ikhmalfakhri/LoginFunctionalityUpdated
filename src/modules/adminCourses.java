@@ -39,6 +39,7 @@ public class adminCourses extends javax.swing.JFrame {
     static String credit = "";
     static String act = "";
     static int hours = -1;
+    int stype = lf.getSType();
     /**
      * Creates new form adminModules
      */
@@ -152,6 +153,7 @@ public class adminCourses extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setRowHeight(20);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

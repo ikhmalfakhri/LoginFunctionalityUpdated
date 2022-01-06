@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.lang.*;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,11 +29,22 @@ public class modulesDetail extends javax.swing.JFrame{
     ResultSet rs = null;
     LoginForm1 lf = new LoginForm1();
     adminCourses am =new adminCourses();
+    studentCourses sc= new studentCourses();
     int hours = -1;
     static int occ = -1,ecap =-1,edit =0;
     static String type="",eday ="", etime ="",etime1 = "",etime2="",elec ="";
     
 
+    public void setTable(){
+        if(lf.getSType()>0){
+            editButton.setVisible(false);
+            addButton.setVisible(false);
+            deleteButton.setVisible(false);
+            registerButton.setVisible(true);
+        } else{
+            registerButton.setVisible(false);
+        }
+    }
     public void updateTable(){
             String update = "SELECT * FROM APP.ALL_MODULES ORDER BY OCCURENCE";
         try {
@@ -42,10 +54,15 @@ public class modulesDetail extends javax.swing.JFrame{
         } catch (SQLException ex) {
             Logger.getLogger(modulesDetail.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }        
+    }
     
     public void displayModules(){
-        String dm = "SELECT * FROM all_MODULES where modules='"+am.getModuleCode()+"' ORDER BY OCCURENCE";
+        String dm = "";
+        if(lf.getSType()<=0){
+            dm = "SELECT * FROM all_MODULES where modules='"+am.getModuleCode()+"' ORDER BY OCCURENCE";
+        } else {
+            dm = "SELECT * FROM all_MODULES where modules='"+sc.getModuleCode()+"' ORDER BY OCCURENCE";   
+        }
         try {
             ps = con.prepareStatement(dm);
             rs = ps.executeQuery();
@@ -79,17 +96,26 @@ public class modulesDetail extends javax.swing.JFrame{
         displayModules();
         setCode();
         setCredit();
-        updateTable();
+        setTable();
         
     }
     
     public void setCode(){
-        courseCode.setText("COURSE: "+am.getModuleCode());
-    }
-    
+        if(lf.getSType()<=0){
+            courseCode.setText("COURSE: "+am.getModuleCode());
+        }
+        else{
+            courseCode.setText("COURSE: "+sc.getModuleCode());
+        }
+        }
     public void setCredit(){
-        courseCredit.setText("CREDIT: "+am.getCredit());
-    }
+            if(lf.getSType()<=0){
+            courseCredit.setText("CREDIT: "+am.getCredit());
+        }
+        else{
+            courseCredit.setText("CREDIT: "+sc.getCredit());
+        }
+        }
     public void setEdit(int occ,int scap,String type,String day,String time,int edit,String time1,String time2){
         this.occ = occ;
         this.type = type;
@@ -162,11 +188,12 @@ public class modulesDetail extends javax.swing.JFrame{
         jScrollPane1 = new javax.swing.JScrollPane();
         modulesTable = new javax.swing.JTable();
         courseCredit = new javax.swing.JLabel();
-        backBut = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         courseCode = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -204,20 +231,20 @@ public class modulesDetail extends javax.swing.JFrame{
         courseCredit.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         courseCredit.setText("CREDIT    :");
 
-        backBut.setText("Back");
-        backBut.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
         courseCode.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         courseCode.setText("COURSE  : ");
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -235,6 +262,13 @@ public class modulesDetail extends javax.swing.JFrame{
             }
         });
 
+        registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,24 +277,23 @@ public class modulesDetail extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(courseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(editButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(backBut)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(courseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(courseCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,16 +301,18 @@ public class modulesDetail extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(backBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton)
                         .addComponent(deleteButton)
                         .addComponent(editButton))
                     .addComponent(courseCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(courseCredit)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(courseCredit)
+                    .addComponent(registerButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -289,18 +324,23 @@ public class modulesDetail extends javax.swing.JFrame{
 
     }//GEN-LAST:event_modulesTableMouseClicked
 
-    private void backButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        new adminCourses().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_backButActionPerformed
+        if(lf.getSType()<=0){
+            new adminCourses().setVisible(true);
+            dispose();}
+        else{
+            new studentCourses().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         edit = 0;
         new addModules().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
@@ -330,7 +370,7 @@ public class modulesDetail extends javax.swing.JFrame{
         addModules as = new addModules();
         
         try{
-        int index = modulesTable.getSelectedRow();
+            int index = modulesTable.getSelectedRow();
             TableModel model = modulesTable.getModel();
             int occ = Integer.parseInt(model.getValueAt(index, 1).toString());
             int scap = Integer.parseInt(model.getValueAt(index, 7).toString());
@@ -344,12 +384,51 @@ public class modulesDetail extends javax.swing.JFrame{
             setEdit(occ,scap,typ,day,time,edit,time1,time2);
             as.editMod();
             as.setVisible(true);
-            this.setVisible(false);
+            dispose();
         }catch(Exception e){
             System.out.println("273 md");
             JOptionPane.showMessageDialog(null,"NO COURSE SELECTED");
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+        int index = modulesTable.getSelectedRow();
+        TableModel model = modulesTable.getModel();
+            
+        int occ = Integer.parseInt(model.getValueAt(index, 1).toString());
+        String type = model.getValueAt(index, 5).toString();
+        String modulecode = model.getValueAt(index, 0).toString();
+        String day = model.getValueAt(index, 2).toString();
+        String time1 = model.getValueAt(index, 3).toString();
+        String time2 = model.getValueAt(index, 4).toString();
+        String username = lf.getMatrix();
+        try{
+            Statement st;
+            st = con.createStatement();
+            String strQuery3 = "SELECT COUNT(*) FROM app.REGISTEREDMODULES where module='" + modulecode + "' and USERNAME='"+username+"'";
+            ResultSet rs3 = st.executeQuery(strQuery3);
+            rs3.next();
+            String Countrow3 = rs3.getString(1);
+            System.out.println(Countrow3);
+            if(Countrow3.equals("0")){
+            String reg ="INSERT INTO APP.REGISTEREDMODULES(USERNAME,MODULE,OCC,ACTIVITYTYPE,DAY,TIMESTART,TIMEEND) SELECT '"+username+"',MODULES,OCCURENCE,ACTIVITYTYPE,DAY,TIMESTART,TIMEEND FROM APP.ALL_MODULES WHERE OCCURENCE="+occ+" AND  MODULES='"+modulecode+"'";
+            st = con.createStatement();
+            st.execute(reg);
+            
+            JOptionPane.showMessageDialog(null, "MODULE REGISTERED");
+            } else {
+                JOptionPane.showMessageDialog(null, "MODULE ALREADY REGISTERED");
+                
+            }
+        }catch(SQLException e){
+            System.out.println("failed md401");
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,13 +466,14 @@ public class modulesDetail extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backBut;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel courseCode;
     private javax.swing.JLabel courseCredit;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable modulesTable;
+    private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

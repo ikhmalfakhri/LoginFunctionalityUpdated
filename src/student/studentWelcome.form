@@ -23,29 +23,28 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="disName" max="32767" attributes="0"/>
+                      <Component id="txtName" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="viewM" pref="115" max="32767" attributes="0"/>
-                          <Component id="logoutBut" pref="115" max="32767" attributes="0"/>
-                          <Component id="a" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel1" alignment="0" pref="467" max="32767" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" pref="464" max="32767" attributes="0"/>
               </Group>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="351" max="-2" attributes="0"/>
-              <Component id="disStatus" min="-2" max="-2" attributes="0"/>
+              <Component id="txtStatus" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="timetableButton" min="-2" pref="159" max="-2" attributes="0"/>
+                  <Component id="regCourseButton" min="-2" pref="159" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,24 +52,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="disStatus" min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="txtStatus" min="-2" pref="26" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="60" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="disName" min="-2" pref="28" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="a" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="txtName" min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="regCourseButton" min="-2" pref="60" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="viewM" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="logoutBut" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace pref="80" max="32767" attributes="0"/>
+              <Component id="timetableButton" min="-2" pref="60" max="-2" attributes="0"/>
+              <EmptySpace pref="153" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="disStatus">
+    <Component class="javax.swing.JLabel" name="txtStatus">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tw Cen MT" size="14" style="1"/>
@@ -79,7 +76,7 @@
         <Property name="text" type="java.lang.String" value="STATUS : placeho"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="disName">
+    <Component class="javax.swing.JLabel" name="txtName">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tw Cen MT" size="14" style="1"/>
@@ -97,28 +94,20 @@
         <Property name="text" type="java.lang.String" value="WELCOME"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="logoutBut">
+    <Component class="javax.swing.JButton" name="regCourseButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Log Out"/>
+        <Property name="text" type="java.lang.String" value="Register Course"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regCourseButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="viewM">
+    <Component class="javax.swing.JButton" name="timetableButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View Courses"/>
+        <Property name="text" type="java.lang.String" value="Timetable"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewMActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="a">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="My Courses"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timetableButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

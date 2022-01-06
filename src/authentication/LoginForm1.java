@@ -9,6 +9,7 @@ import admin.adminWelcome;
 import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import student.studentWelcome;
 
 /**
  *
@@ -20,10 +21,15 @@ public class LoginForm1 extends javax.swing.JFrame {
     PreparedStatement ps = null;
     ResultSet rs = null;
     static String userName = "PLACEHOLDER";
-    static int sype = -1;
+    static int sype = -1, muet = 0;
+    static String matrixnumber = "";
     
     public void setUserName(String inputtedUserName){
         this.userName = inputtedUserName;
+    }
+    
+    public void setMatrix(String matrix){
+        this.matrixnumber = matrix;
     }
     
     public void setSType(int stype){
@@ -35,6 +41,15 @@ public class LoginForm1 extends javax.swing.JFrame {
     
     public String getUserName(){
         return userName;
+    }
+    public String getMatrix(){
+        return matrixnumber;
+    }
+    public void setMuet(int muet){
+        this.muet = muet;
+    }
+    public int getMuet(){
+        return muet;
     }
 
     /**
@@ -187,6 +202,7 @@ public class LoginForm1 extends javax.swing.JFrame {
             if(rs.next()){
                 
                 String inputtedUserName = usernameTextField.getText();
+                setMatrix(usernameTextField.getText());
                 String fullName = "SELECT FULLNAME FROM logintable WHERE MATRIX_NUMBER = '" + inputtedUserName + "'";
                 ps = con.prepareStatement(fullName);
                 rs = ps.executeQuery();
@@ -196,6 +212,19 @@ public class LoginForm1 extends javax.swing.JFrame {
                     
                 }
                 dispose();
+                
+       String muet1 = "SELECT MUET_BAND FROM logintable where MATRIX_NUMBER = '"+inputtedUserName+"'";
+        try{
+            ps = con.prepareStatement(muet1);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                int muet = rs.getInt("MUET");
+               
+                setMuet(muet);
+            }   
+        }catch(SQLException ex){
+            
+        }         
                 
         String role = "SELECT STDNT_TYPE FROM logintable where MATRIX_NUMBER = '"+inputtedUserName+"'";
         try{
@@ -209,12 +238,10 @@ public class LoginForm1 extends javax.swing.JFrame {
                     new lecWelcome().setVisible(true);
                 }
                 else{
-                    new adminWelcome().setVisible(true);
+                    new studentWelcome().setVisible(true);
                 }
                 setSType(stype);
-            }
-           
-            
+            }   
         }catch(SQLException ex){
             
         }

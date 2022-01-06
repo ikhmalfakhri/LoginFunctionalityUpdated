@@ -255,7 +255,7 @@ public class addModules extends javax.swing.JFrame {
             }
         });
 
-        ampm1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PM" }));
+        ampm1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PM", "AM" }));
         ampm1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ampm1ActionPerformed(evt);
@@ -377,7 +377,7 @@ public class addModules extends javax.swing.JFrame {
         new modulesDetail().updateTable();
         modulesDetail wp2 = new modulesDetail();
         wp2.setVisible(true);
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_ExitActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -509,22 +509,15 @@ public class addModules extends javax.swing.JFrame {
     private void txtTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTime1ActionPerformed
         // TODO add your handling code here:
         int index = txtTime1.getSelectedIndex();
+        int count =0;
         if(index<=7){
-            ampm1.addItem("PM");
-            ampm1.removeItem("PM");
-            ampm1.removeItem("AM");
+            ampm1.setSelectedItem((Object)"PM");
             setHour();
-        } else{
-            ampm1.addItem("AM");
-            ampm1.removeItem("PM");
+        }else{
+            ampm1.setSelectedItem((Object)"AM");
             setHour();
         }
     }//GEN-LAST:event_txtTime1ActionPerformed
-
-    private void ampm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ampm1ActionPerformed
-        // TODO add your handling code here:
-        setHour();
-    }//GEN-LAST:event_ampm1ActionPerformed
 
     private void txtActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActActionPerformed
         // TODO add your handling code here:
@@ -538,6 +531,11 @@ public class addModules extends javax.swing.JFrame {
     private void txtOccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOccActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOccActionPerformed
+
+    private void ampm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ampm1ActionPerformed
+        // TODO add your handling code here:
+        setHour();
+    }//GEN-LAST:event_ampm1ActionPerformed
 
     /**
      * @param args the command line arguments
